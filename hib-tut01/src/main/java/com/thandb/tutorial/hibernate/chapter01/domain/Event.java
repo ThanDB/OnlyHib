@@ -1,11 +1,15 @@
 package com.thandb.tutorial.hibernate.chapter01.domain;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Event {
 	private long id;
 	private String title;
 	private Date date;
+
+	private Set<Person> persons = new HashSet<Person>();
 
 	public long getId() {
 		return id;
@@ -30,10 +34,18 @@ public class Event {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
+
+	public Set<Person> getPersons() {
+		return persons;
+	}
+
+	public void setPersons(Set<Person> persons) {
+		this.persons = persons;
+	}
+
 	@Override
 	public String toString() {
-		return getId() + " - " + getTitle()  + " - " + getDate().toString() ;
+		return getId() + " - " + getTitle() + " - " + getDate().toString();
 	}
 
 }

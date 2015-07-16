@@ -2,7 +2,9 @@ package com.thandb.tutorial.hibernate.chapter01.test;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
 import com.thandb.tutorial.hibernate.chapter01.domain.Event;
@@ -14,30 +16,49 @@ public class EventManager {
 	public static void main(String[] args) {
 		EventManager mgr = new EventManager();
 
-		if (args[0].equals("store")) {
-			mgr.createAndStoreEvent("My Event", new Date());
-		} else if (args[0].equals("list")) {
+//		if (args[0].equals("store")) {
+//			mgr.createAndStoreEvent("My Event", new Date());
+//		} else if (args[0].equals("list")) {
 			List events = mgr.listEvents();
 			for (int i = 0; i < events.size(); i++) {
 				Event theEvent = (Event) events.get(i);
 				System.out.println("Event: " + theEvent.getTitle() + " Time: "
 						+ theEvent.getDate());
+				
+				Set<Person> persons = theEvent.getPersons();
+				for (Person person : persons) {
+					System.out.println(person);
+				}
+				
+				System.out.println("------------------------------------------");
 			}
-		}
+//		}
+			
+//			Long eventId = mgr.createAndStoreEvent("My Event", new Date());
+//            Long personId = mgr.createAndStorePerson("Foo1", "Bar1");
+//            mgr.addPersonToEvent(personId, eventId);
+//            personId = mgr.createAndStorePerson("Foo2", "Bar2");
+//            mgr.addPersonToEvent(personId, eventId);
+//            personId = mgr.createAndStorePerson("Foo3", "Bar3");
+//            mgr.addPersonToEvent(personId, eventId);
+//            personId = mgr.createAndStorePerson("Foo4", "Bar4");
+//            mgr.addPersonToEvent(personId, eventId);
 
 		HibernateUtil.getSessionFactory().close();
 	}
 
-	private void createAndStoreEvent(String title, Date theDate) {
+	private Long createAndStoreEvent(String title, Date theDate) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 
 		Event theEvent = new Event();
 		theEvent.setTitle(title);
 		theEvent.setDate(theDate);
-		session.save(theEvent);
+		Long id = (Long) session.save(theEvent);
 
 		session.getTransaction().commit();
+		
+		return id;
 	}
 
 	/*
@@ -48,11 +69,13 @@ public class EventManager {
 	 * return session.createCriteria(Event.class).list(); }
 	 */
 
-	private List listEvents() {
+	private List<Event> listEvents() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		List result = session.createQuery("from Event").list();
-		session.getTransaction().commit();
+		List<Event> result = session.createQuery("from Event").list();
+		for (Event event : result) {
+			Hibernate.initialize(event.getPersons());
+		}
 		return result;
 	}
 
@@ -65,5 +88,21 @@ public class EventManager {
 		aPerson.getEvents().add(anEvent);
 
 		session.getTransaction().commit();
+	}
+	
+	private Long createAndStorePerson(String firstName, String lastName){
+		Long id = 0l;
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+
+		Person thePerson = new Person();
+		thePerson.setFirstName(firstName);
+		thePerson.setLastName(lastName);
+		id = (Long) session.save(thePerson);
+
+		session.getTransaction().commit();
+		
+		return id;
 	}
 }
