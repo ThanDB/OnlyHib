@@ -19,7 +19,7 @@ public class EventManager {
 //		if (args[0].equals("store")) {
 //			mgr.createAndStoreEvent("My Event", new Date());
 //		} else if (args[0].equals("list")) {
-			List events = mgr.listEvents();
+		List<Event> events = mgr.listEvents();
 			for (int i = 0; i < events.size(); i++) {
 				Event theEvent = (Event) events.get(i);
 				System.out.println("Event: " + theEvent.getTitle() + " Time: "
@@ -43,6 +43,9 @@ public class EventManager {
 //            mgr.addPersonToEvent(personId, eventId);
 //            personId = mgr.createAndStorePerson("Foo4", "Bar4");
 //            mgr.addPersonToEvent(personId, eventId);
+//            
+//            mgr.addEmailToPerson(personId, "email1@gmail.com");
+//            mgr.addEmailToPerson(personId, "email2@gmail.com");
 
 		HibernateUtil.getSessionFactory().close();
 	}
@@ -104,5 +107,16 @@ public class EventManager {
 		session.getTransaction().commit();
 		
 		return id;
+	}
+	
+	private void addEmailToPerson(Long personId, String emailAddress) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		Person aPerson = (Person) session.load(Person.class, personId);
+		// adding to the emailAddress collection might trigger a lazy load of the collection
+		aPerson.getEmailAddresses().add(emailAddress);
+		
+		session.getTransaction().commit();
 	}
 }

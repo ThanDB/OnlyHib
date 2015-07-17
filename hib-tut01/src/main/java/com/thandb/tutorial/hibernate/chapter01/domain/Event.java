@@ -11,6 +11,8 @@ public class Event {
 
 	private Set<Person> persons = new HashSet<Person>();
 
+	private Set<Person> participants = new HashSet<Person>();
+
 	public long getId() {
 		return id;
 	}
@@ -41,6 +43,14 @@ public class Event {
 
 	public void setPersons(Set<Person> persons) {
 		this.persons = persons;
+	}
+
+	public Set<Person> getParticipants() {
+		return participants;
+	}
+
+	public void setParticipants(Set<Person> participants) {
+		this.participants = participants;
 	}
 
 	@Override
