@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.thandb.tutorial.hibernate.chapter12</groupId>
+	<artifactId>hibernate-tutorial-chapter12</artifactId>
+	<packaging>war</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<url>http://maven.apache.org</url>
+	<name>Hibernate Tutorial 12</name>
+
+	<properties>
+		<org.springframework-version>4.1.7.RELEASE</org.springframework-version>
+		<org.aspectj-version>1.7.4</org.aspectj-version>
+		<org.slf4j-version>1.7.5</org.slf4j-version>
+		
+		
+		<hibernate.version>4.3.5.Final</hibernate.version>
+		<joda-time.version>2.3</joda-time.version>
+		<slf4j-simple.version>1.7.12</slf4j-simple.version>
+		<servlet-api.version>3.0-alpha-1</servlet-api.version>
+		<javassist.version>3.12.1.GA</javassist.version>
+		<mysql-connector-java.version>5.1.36</mysql-connector-java.version>
+	</properties>
+
+	<build>
+		<!-- we dont want the version to be part of the generated war file name -->
+		<finalName>${artifactId}</finalName>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<!-- Because this is a web app, we also have a dependency on the servlet 
+			api. -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${servlet-api.version}</version>
+		</dependency>
+
+		<!-- Hibernate uses slf4j for logging, for our purposes here use the simple 
+			backend -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j-simple.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>${javassist.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector-java.version}</version>
+		</dependency>
+	</dependencies>
+</project>
