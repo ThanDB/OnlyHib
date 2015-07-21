@@ -3,5 +3,15 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+	<display-name>Archetype Created Web Application</display-name>
+
+	<servlet>
+		<servlet-name>Event Manager</servlet-name>
+		<servlet-class>com.thandb.tutorial.hibernate.chapter01.web.EventManagerServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Event Manager</servlet-name>
+		<url-pattern>/eventmanager</url-pattern>
+	</servlet-mapping>
 </web-app>
