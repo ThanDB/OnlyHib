@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.thandb.tutorial.hibernate.chapter12.domain">
+	<class name="Stock" table="stock">
+		<!-- <id name="id" column="EVENT_ID"> <generator class="native" /> </id> 
+			<property name="date" type="timestamp" column="EVENT_DATE" /> <property name="title" 
+			/> <set name="persons" table="PERSON_EVENT"> <key column="EVENT_ID" /> <many-to-many 
+			column="PERSON_ID" class="Person" /> </set> <set name="participants" table="PERSON_EVENT" 
+			inverse="true"> <key column="EVENT_ID"/> <many-to-many column="PERSON_ID" 
+			class="Person"/> </set> -->
+		<id name="stockId" type="java.lang.Integer">
+			<column name="STOCK_ID" />
+			<generator class="identity" />
+		</id>
+		<property name="stockCode" type="string">
+			<column name="STOCK_CODE" length="10" not-null="true" unique="true" />
+		</property>
+		<property name="stockName" type="string">
+			<column name="STOCK_NAME" length="20" not-null="true" unique="true" />
+		</property>
+		<set name="stockDailyRecords" table="stock_daily_record" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="STOCK_ID" not-null="true" />
+			</key>
+			<one-to-many class="com.thandb.tutorial.hibernate.chapter12.domain.StockDailyRecord" />
+		</set>
+	</class>
+
+</hibernate-mapping>
