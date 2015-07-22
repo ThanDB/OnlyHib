@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.thandb.tutorial.hibernate.chapter12.domain">
-	<class name="Stock" table="stock">
+	<class name="Stock" table="stock" mutable="false">
 		<!-- <id name="id" column="EVENT_ID"> <generator class="native" /> </id> 
 			<property name="date" type="timestamp" column="EVENT_DATE" /> <property name="title" 
 			/> <set name="persons" table="PERSON_EVENT"> <key column="EVENT_ID" /> <many-to-many 
