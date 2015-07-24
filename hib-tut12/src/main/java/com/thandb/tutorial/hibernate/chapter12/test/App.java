@@ -97,7 +97,85 @@ public class App {
 			}*/
 			
 			/*************************************************/
-			// 2.
+			// 2. Mutable in collection
+			// 1.1 Mutable is true
+			/* Add */
+
+			Stock stock = (Stock) session
+					.createQuery(" from Stock").list()
+					.get(0);
+			StockDailyRecord sdr = new StockDailyRecord();
+			sdr.setDate(new Date());
+			sdr.setStock(stock);
+			stock.getStockDailyRecords().add(sdr);
+			session.save(stock);
+						
+						/* Update */
+						/*Stock stock = (Stock) session.get(Stock.class, new Integer(36));
+						stock.setStockName("Google");
+						session.saveOrUpdate(stock);
+						
+						tx.commit();
+						stock = (Stock) session.get(Stock.class, new Integer(36));
+						System.out.println("New Stock name: " + stock.getStockName());*/
+						
+						/* Delete */
+						/*Stock stock = (Stock) session.get(Stock.class, new Integer(36));
+						session.delete(stock);
+						
+						tx.commit();
+						stock = (Stock) session.get(Stock.class, new Integer(36));
+						if(stock == null) {
+							System.out.println("Stock is null");
+						} else {
+							System.out.println("Stock was not deleted. Stock name: " + stock.getStockName());
+						}*/
+						
+						// 1.2 Mutable is false
+						/* Add */
+						/*Stock stock = new Stock();
+						stock.setStockCode("7277");
+						stock.setStockName("MICROSOFT");
+						id = (Integer) session.save(stock);
+						tx.commit();
+						System.out.println("ID: " + id);
+						stock = (Stock) session.get(Stock.class, new Integer(id));
+						if(stock == null) {
+							System.out.println("Cannot add the stock.");
+						} else {
+							System.out.println("Added a new Stock: " + stock.getStockName());
+						}
+						System.out.println("Done");*/
+									
+						/* Update */
+						/*Stock stock = (Stock) session.get(Stock.class, new Integer(37));
+						stock.setStockName("Google");
+						session.saveOrUpdate(stock);
+
+						tx.commit();
+						stock = (Stock) session.get(Stock.class, new Integer(37));
+						if (stock == null) {
+							System.out.println();
+						} else {
+							if ("Google".equals(stock.getStockName())) {
+								System.out.println("Stock was not changed. Stock name: " + stock.getStockName());
+							} else {
+								System.out.println("Stock was changed. Stock name: " + stock.getStockName());
+							}
+						}*/
+									
+						/* Delete */
+						/*Stock stock = (Stock) session.get(Stock.class, new Integer(37));
+						session.delete(stock);
+
+						tx.commit();
+						stock = (Stock) session.get(Stock.class, new Integer(37));
+						if (stock == null) {
+							System.out.println("Stock was deleted.");
+						} else {
+							System.out.println("Stock was not deleted. Stock name: "
+									+ stock.getStockName());
+						}*/
 		} catch (Exception e) {
 			if(tx != null) {
 				tx.rollback();
@@ -107,6 +185,7 @@ public class App {
 			if (session != null) {
 				session.close();
 			}
+			System.out.println("Done");
 		}
 		/* END TEST FOR READ ONLY ENTITY */
 		
